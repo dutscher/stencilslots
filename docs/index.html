@@ -8,41 +8,35 @@
   <script nomodule="" src="/build/slots.js"></script>
 </head>
 <body>
-<script>function doParentRerender(selector) {
-  const parent = document.querySelector(selector);
-  const child = parent.querySelector('my-child');
-  console.log(parent, child)
-  // toogle
-  parent.disabled = !parent.disabled;
+  <script>function doParentRerender(selector) {
+    const parent = document.querySelector(selector);
+    const child = parent.querySelector('my-child');
+    console.log(parent, child)
+    // toogle
+    parent.disabled = !parent.disabled;
 
-  if (parent.disabled) {
-    parent.messageInline = { isPrimary: true };
-    child.text = 'changed text';
-  } else {
-    parent.messageInline = { isPrimary: false };
-    child.text = 'other changed text for rerender';
-  }
-}</script>
-<button onclick="doParentRerender('my-parent')">Change prop</button>
-<br><br>
-<my-parent tag="Property for rerender">
-  <my-child text="Default slot text"></my-child>
-</my-parent>
-<hr>
-<button onclick="doParentRerender('my-parent-workaround')">Change prop</button>
-<br><br>
-<my-parent-workaround tag="Property for rerender">
-  <my-child text="Default slot text"></my-child>
-</my-parent-workaround>
-<script>if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  // auto-unregister service worker during dev mode
-  navigator.serviceWorker.getRegistration().then(function (registration) {
-    if (registration) {
-      registration.unregister().then(function () {
-        location.reload(true)
-      });
+    if (parent.disabled) {
+      parent.messageInline = { isPrimary: true };
+      child.text = 'changed text';
+    } else {
+      parent.messageInline = { isPrimary: false };
+      child.text = 'other changed text for rerender';
     }
-  });
-}</script>
+  }</script>
+
+  <button onclick="doParentRerender('my-parent')">Change prop</button>
+  <br><br>
+  <my-parent tag="Property for rerender">
+    <my-child text="Default slot text"></my-child>
+  </my-parent>
+
+  <hr>
+
+  <button onclick="doParentRerender('my-parent-workaround')">Change prop</button>
+  <br><br>
+  <my-parent-workaround tag="Property for rerender">
+    <my-child text="Default slot text"></my-child>
+  </my-parent-workaround>
+
 </body>
 </html>
