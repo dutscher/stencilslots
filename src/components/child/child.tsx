@@ -1,8 +1,8 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'my-child',
-  styleUrl: 'my-child.css'
+  styleUrl: 'child.css'
 })
 export class Child {
   // mutable doesnt have an effect

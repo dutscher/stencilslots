@@ -12,20 +12,6 @@ export namespace Components {
   interface MyChild {
     'text': string;
   }
-  interface MyComponent {
-    /**
-    * The first name
-    */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
-  }
   interface MyParent {
     'disabled': boolean;
     'messageInline': {};
@@ -42,12 +28,6 @@ declare global {
     new (): HTMLMyChildElement;
   };
 
-  interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
-  };
-
   interface HTMLMyParentElement extends Components.MyParent, HTMLStencilElement {}
   var HTMLMyParentElement: {
     prototype: HTMLMyParentElement;
@@ -55,7 +35,6 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'my-child': HTMLMyChildElement;
-    'my-component': HTMLMyComponentElement;
     'my-parent': HTMLMyParentElement;
   }
 }
@@ -63,20 +42,6 @@ declare global {
 declare namespace LocalJSX {
   interface MyChild {
     'text'?: string;
-  }
-  interface MyComponent {
-    /**
-    * The first name
-    */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
   }
   interface MyParent {
     'disabled'?: boolean;
@@ -86,7 +51,6 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'my-child': MyChild;
-    'my-component': MyComponent;
     'my-parent': MyParent;
   }
 }
@@ -98,7 +62,6 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'my-child': LocalJSX.MyChild & JSXBase.HTMLAttributes<HTMLMyChildElement>;
-      'my-component': LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
       'my-parent': LocalJSX.MyParent & JSXBase.HTMLAttributes<HTMLMyParentElement>;
     }
   }
