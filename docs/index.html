@@ -1,0 +1,43 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Stencil Component Starter</title>
+  <script type="module" src="/build/slots.esm.js"></script>
+  <script nomodule="" src="/build/slots.js"></script>
+</head>
+<body>
+<my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
+<script>function doParentRerender() {
+  const parent = document.querySelector('my-parent');
+  const child = document.querySelector('my-child');
+  // toogle
+  parent.disabled = !parent.disabled;
+
+  if (parent.disabled) {
+    parent.messageInline = { isPrimary: true };
+    child.text = 'changed text';
+  } else {
+    parent.messageInline = { isPrimary: false };
+    child.text = 'other changed text for rerender';
+  }
+}</script>
+<br>
+<button onclick="doParentRerender()">Change prop</button>
+<br><br>
+<my-parent tag="Hallo">
+  <my-child text="Default slot text"></my-child>
+</my-parent>
+<script>if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  // auto-unregister service worker during dev mode
+  navigator.serviceWorker.getRegistration().then(function (registration) {
+    if (registration) {
+      registration.unregister().then(function () {
+        location.reload(true)
+      });
+    }
+  });
+}</script>
+</body>
+</html>
