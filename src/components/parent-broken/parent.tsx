@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, Host, h } from '@stencil/core';
 import Fragment from '../../utils/fragment';
 
 @Component({
@@ -10,18 +10,6 @@ export class Parent {
   @Prop() messageInline: {} = {};
 
   readonly componentName = 'parent';
-
-  hostData() {
-    const classes = [];
-
-    if (this.disabled) {
-      classes.push(`${this.componentName}--disabled`);
-    }
-
-    return {
-      class: classes.join(' '),
-    };
-  }
 
   renderMessage(message) {
     return (
@@ -37,22 +25,30 @@ export class Parent {
   }
 
   render() {
-    return <Fragment>
-      Hello, World! I'm Cool
-      {/* this dont rerender slot */}
-      <div>
-        {/* remove condition: works */}
-        {/* wrap with <div />: works */}
-        {this.disabled && !!this.tag && (
-          <div class="tag" innerHTML={this.tag}/>
-        )}
-        {/* remove div: works */}
+    const classes = [];
+
+    if (this.disabled) {
+      classes.push(`${this.componentName}--disabled`);
+    }
+
+    return (
+      <Host class={classes.join(' ')}>
+        Demonstrate slot rerender bug
+        {/* this dont rerender slot */}
         <div>
-          before slot&gt;
-          <slot/>
-          &lt;after slot
+          {/* remove condition: works */}
+          {/* wrap with <div />: works */}
+          {this.disabled && !!this.tag && (
+            <div class="tag" innerHTML={this.tag}/>
+          )}
+          {/* remove div: works */}
+          <div>
+            before slot&gt;
+            <slot/>
+            &lt;after slot
+          </div>
         </div>
-      </div>
-    </Fragment>;
+      </Host>
+    );
   }
 }

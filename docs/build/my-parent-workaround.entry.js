@@ -17,8 +17,8 @@ const Parent = class {
         if (this.disabled) {
             classes.push(`${this.componentName}--disabled`);
         }
-        return (h(Host, { class: classes.join(' ') }, "Demonstrate slot rerender bug", h("div", null, this.disabled && !!this.tag && (h("div", { class: "tag", innerHTML: this.tag })), h("div", null, "before slot>", h("slot", null), "<after slot"))));
+        return (h(Host, { class: classes.join(' ') }, "Demonstrate working solution", h("div", null, h("div", null, this.disabled && !!this.tag && (h("div", { class: "tag", innerHTML: this.tag }))), h("div", null, "before slot>", h("slot", null), "<after slot"))));
     }
 };
 
-export { Parent as my_parent };
+export { Parent as my_parent_workaround };

@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, Host, h } from '@stencil/core';
 import Fragment from '../../utils/fragment';
 
 @Component({
@@ -10,18 +10,6 @@ export class Parent {
   @Prop() messageInline: {} = {};
 
   readonly componentName = 'parent';
-
-  hostData() {
-    const classes = [];
-
-    if (this.disabled) {
-      classes.push(`${this.componentName}--disabled`);
-    }
-
-    return {
-      class: classes.join(' '),
-    };
-  }
 
   renderMessage(message) {
     return (
@@ -37,20 +25,28 @@ export class Parent {
   }
 
   render() {
-    return <Fragment>
-      Hello, World! I'm Cool
-      <div>
+    const classes = [];
+
+    if (this.disabled) {
+      classes.push(`${this.componentName}--disabled`);
+    }
+
+    return (
+      <Host class={classes.join(' ')}>
+        Demonstrate working solution
         <div>
-          {this.disabled && !!this.tag && (
-            <div class="tag" innerHTML={this.tag}/>
-          )}
+          <div>
+            {this.disabled && !!this.tag && (
+              <div class="tag" innerHTML={this.tag}/>
+            )}
+          </div>
+          <div>
+            before slot&gt;
+            <slot/>
+            &lt;after slot
+          </div>
         </div>
-        <div>
-          before slot&gt;
-          <slot/>
-          &lt;after slot
-        </div>
-      </div>
-    </Fragment>;
+      </Host>
+    );
   }
 }
