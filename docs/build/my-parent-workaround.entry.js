@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './core-6ab53e35.js';
+import { r as registerInstance, h, H as Host } from './core-2f56c436.js';
 import { F as Fragment } from './fragment-67b9b865.js';
 
 const Parent = class {

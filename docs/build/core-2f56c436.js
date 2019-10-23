@@ -492,6 +492,11 @@ const h = (nodeName, vnodeData, ...children) => {
                 if (simple = typeof nodeName !== 'function' && !isComplexType(child)) {
                     child = String(child);
                 }
+                else if (BUILD.isDev && child.$flags$ === undefined) {
+                    console.error(...STENCIL_DEV_MODE, `vNode passed as children has unexpected type.
+Make sure it's using the correct h() function.
+Empty objects can also be the cause, look for JSX comments that became objects.`);
+                }
                 if (simple && lastSimple) {
                     // If the previous child was simple (string), we merge both
                     vNodeChildren[vNodeChildren.length - 1].$text$ += child;
@@ -1581,7 +1586,7 @@ const setValue = (ref, propName, newVal, cmpMeta) => {
                 console.warn(...STENCIL_DEV_MODE, `The state/prop "${propName}" changed during rendering. This can potentially lead to infinite-loops and other bugs.`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
             else if (hostRef.$flags$ & 2048 /* devOnDidLoad */) {
-                console.debug(...STENCIL_DEV_MODE, `The state/prop "${propName}" changed during "componentDidLoad()", this triggers extra re-renders, try to setup on "componentWillRender()"`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
+                console.debug(...STENCIL_DEV_MODE, `The state/prop "${propName}" changed during "componentDidLoad()", this triggers extra re-renders, try to setup on "componentWillLoad()"`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
         }
         if (!BUILD.lazyLoad || instance) {

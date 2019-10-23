@@ -1,4 +1,4 @@
-import { r as registerInstance } from './core-6ab53e35.js';
+import { r as registerInstance } from './core-2f56c436.js';
 
 const Child = class {
     constructor(hostRef) {

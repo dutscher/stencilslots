@@ -15,4 +15,7 @@ export const config: Config = {
       serviceWorker: null // disable service workers
     }
   ],
+  bundles: [
+    { components: ['my-parent', 'my-parent-workaround', 'my-child'] },
+  ]
 };
