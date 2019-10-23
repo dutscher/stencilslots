@@ -10,7 +10,7 @@ See html: https://github.com/dutscher/stencilslots/blob/master/docs/index.html
 
 # Goal is to have tsx like in broken parent but with no rerender bug.
 
-
+## Issue for ionic-team: https://github.com/ionic-team/stencil/issues/1968
 --
 
 
