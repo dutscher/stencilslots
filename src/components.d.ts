@@ -17,6 +17,11 @@ export namespace Components {
     'messageInline': {};
     'tag': string;
   }
+  interface MyParentWorkaround {
+    'disabled': boolean;
+    'messageInline': {};
+    'tag': string;
+  }
 }
 
 declare global {
@@ -33,9 +38,16 @@ declare global {
     prototype: HTMLMyParentElement;
     new (): HTMLMyParentElement;
   };
+
+  interface HTMLMyParentWorkaroundElement extends Components.MyParentWorkaround, HTMLStencilElement {}
+  var HTMLMyParentWorkaroundElement: {
+    prototype: HTMLMyParentWorkaroundElement;
+    new (): HTMLMyParentWorkaroundElement;
+  };
   interface HTMLElementTagNameMap {
     'my-child': HTMLMyChildElement;
     'my-parent': HTMLMyParentElement;
+    'my-parent-workaround': HTMLMyParentWorkaroundElement;
   }
 }
 
@@ -48,10 +60,16 @@ declare namespace LocalJSX {
     'messageInline'?: {};
     'tag'?: string;
   }
+  interface MyParentWorkaround {
+    'disabled'?: boolean;
+    'messageInline'?: {};
+    'tag'?: string;
+  }
 
   interface IntrinsicElements {
     'my-child': MyChild;
     'my-parent': MyParent;
+    'my-parent-workaround': MyParentWorkaround;
   }
 }
 
@@ -63,6 +81,7 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'my-child': LocalJSX.MyChild & JSXBase.HTMLAttributes<HTMLMyChildElement>;
       'my-parent': LocalJSX.MyParent & JSXBase.HTMLAttributes<HTMLMyParentElement>;
+      'my-parent-workaround': LocalJSX.MyParentWorkaround & JSXBase.HTMLAttributes<HTMLMyParentWorkaroundElement>;
     }
   }
 }

@@ -2,7 +2,7 @@ import { Component, Prop, h } from '@stencil/core';
 import Fragment from '../../utils/fragment';
 
 @Component({
-  tag: 'my-parent'
+  tag: 'my-parent-workaround'
 })
 export class Parent {
   @Prop() tag: string = '';
@@ -39,13 +39,12 @@ export class Parent {
   render() {
     return <Fragment>
       Hello, World! I'm Cool
-      {/* this dont rerender slot */}
       <div>
-        {/* remove condition: works */}
-        {this.disabled && !!this.tag && (
-          <div class="tag" innerHTML={this.tag}/>
-        )}
-        {/* remove div: works */}
+        <div>
+          {this.disabled && !!this.tag && (
+            <div class="tag" innerHTML={this.tag}/>
+          )}
+        </div>
         <div>
           before slot&gt;
           <slot/>

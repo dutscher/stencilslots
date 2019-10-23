@@ -10,13 +10,10 @@
 
 </head>
 <body>
-
-  <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
-
   <script>
-    function doParentRerender() {
-      const parent = document.querySelector('my-parent');
-      const child = document.querySelector('my-child');
+    function doParentRerender(selector) {
+      const parent = document.querySelector(selector);
+      const child = parent.querySelector('my-child');
       // toogle
       parent.disabled = !parent.disabled;
 
@@ -30,12 +27,19 @@
     }
   </script>
 
-  <br />
-  <button onclick="doParentRerender()">Change prop</button><br /><br />
+  <button onclick="doParentRerender('my-parent')">Change prop</button><br /><br />
 
-  <my-parent tag="Hallo">
+  <my-parent tag="My Parent">
     <my-child text="Default slot text"></my-child>
   </my-parent>
+
+  <hr />
+
+  <button onclick="doParentRerender('my-parent-workaround')">Change prop</button><br /><br />
+
+  <my-parent-workaround tag="My Parent with wrap div to fix slot">
+    <my-child text="Default slot text"></my-child>
+  </my-parent-workaround>
 
 </body>
 </html>
