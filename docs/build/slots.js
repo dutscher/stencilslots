@@ -6,6 +6,7 @@
 
   // Safari 10 support type="module" but still download and executes the nomodule script
   if (!currentScript || !currentScript.hasAttribute('nomodule') || !('onbeforeload' in currentScript)) {
+    console.log("hallo")
 
     /*!
 es6-promise - a tiny implementation of Promises/A+.
