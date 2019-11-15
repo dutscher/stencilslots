@@ -5,12 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
   <script>
-    // https://github.com/GrosSacASac/JavaScript-Set-Up/blob/master/js/quirk_fixes/safari10_nomodule_fix.js
-    if (window.MAIN_EXECUTED) {
-      // "warning main.js already executed"
-      throw new Error("");
-    }
-    window.MAIN_EXECUTED = true;
+    /**
+     * Minified-ish version of the above.
+     */
+    (function() {
+      var d = document;
+      var c = d.createElement('script');
+      if (!('noModule' in c) && 'onbeforeload' in c) {
+        var s = false;
+        d.addEventListener('beforeload', function(e) {
+          if (e.target === c) {
+            s = true;
+          } else if (!e.target.hasAttribute('nomodule') || !s) {
+            return;
+          }
+          e.preventDefault();
+        }, true);
+
+        c.type = 'module';
+        c.src = '.';
+        d.head.appendChild(c);
+        c.remove();
+      }
+    }());
   </script>
   <link rel="modulepreload" href="/stencilslots/build/p-122505ca.js">
   <link rel="modulepreload" href="/stencilslots/build/p-fgzkb6bm.entry.js">
