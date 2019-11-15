@@ -1,12 +1,11 @@
 
-//'use strict';
+'use strict';
 (function () {
   var doc = document;
   var currentScript = doc.currentScript;
 
   // Safari 10 support type="module" but still download and executes the nomodule script
   if (!currentScript || !currentScript.hasAttribute('nomodule') || !('onbeforeload' in currentScript)) {
-    console.log("hallo")
 
     /*!
 es6-promise - a tiny implementation of Promises/A+.
@@ -677,16 +676,13 @@ function loadDocument(doc, globalScopes) {
     return loadDocumentLinks(doc, globalScopes);
 }
 function startWatcher(doc, globalScopes) {
-  if ("MutationObserver" in window) {
     var mutation = new MutationObserver(function () {
         if (loadDocumentStyles(doc, globalScopes)) {
             updateGlobalScopes(globalScopes);
         }
     });
     mutation.observe(document.head, { childList: true });
-  }
 }
-
 function loadDocumentLinks(doc, globalScopes) {
     var promises = [];
     var linkElms = doc.querySelectorAll('link[rel="stylesheet"][href]:not([data-no-shim])');
