@@ -65,6 +65,10 @@ const registerHost = (elm) => {
     return hostRefs.set(elm, hostRef);
 };
 const isMemberInElement = (elm, memberName) => memberName in elm;
+const STENCIL_DEV_MODE = ['%c[STENCIL-DEV-MODE]', 'color:#4c47ff;font-weight: bold'];
+const consoleDevError = (...m) => console.error(...STENCIL_DEV_MODE, ...m);
+const consoleDevWarn = (...m) => console.warn(...STENCIL_DEV_MODE, ...m);
+const consoleDevInfo = (...m) => console.info(...STENCIL_DEV_MODE, ...m);
 const consoleError = (e) => console.error(e);
 const moduleCache = /*@__PURE__*/ new Map();
 const loadModule = (cmpMeta, hostRef, hmrVersionId) => {
@@ -187,89 +191,6 @@ const isComplexType = (o) => {
 const getDynamicImportFunction = (namespace) => {
     return `__sc_import_${namespace.replace(/\s|-/g, '_')}`;
 };
-const STENCIL_DEV_MODE = ['%c[STENCIL-DEV-MODE]', 'color:#4c47ff;font-weight: bold'];
-const createTime = (fnName, tagName = '') => {
-    if (BUILD.profile) {
-        const key = `st:${fnName}:${tagName}:${i++}`;
-        // Start
-        performance.mark(key);
-        // End
-        return () => performance.measure(`[Stencil] ${fnName}() <${tagName}>`, key);
-    }
-    else {
-        return () => { return; };
-    }
-};
-const uniqueTime = (key, measureText) => {
-    if (BUILD.profile) {
-        if (performance.getEntriesByName(key).length === 0) {
-            performance.mark(key);
-        }
-        return () => {
-            if (performance.getEntriesByName(measureText).length === 0) {
-                performance.measure(measureText, key);
-            }
-        };
-    }
-    else {
-        return () => { return; };
-    }
-};
-const inspect = (ref) => {
-    const hostRef = getHostRef(ref);
-    if (!hostRef) {
-        return undefined;
-    }
-    const flags = hostRef.$flags$;
-    const hostElement = hostRef.$hostElement$;
-    return {
-        renderCount: hostRef.$renderCount$,
-        flags: {
-            hasRendered: !!(flags & 2 /* hasRendered */),
-            hasConnected: !!(flags & 1 /* hasConnected */),
-            isWaitingForChildren: !!(flags & 4 /* isWaitingForChildren */),
-            isConstructingInstance: !!(flags & 8 /* isConstructingInstance */),
-            isQueuedForUpdate: !!(flags & 16 /* isQueuedForUpdate */),
-            hasInitializedComponent: !!(flags & 32 /* hasInitializedComponent */),
-            hasLoadedComponent: !!(flags & 64 /* hasLoadedComponent */),
-            isWatchReady: !!(flags & 128 /* isWatchReady */),
-            isListenReady: !!(flags & 256 /* isListenReady */),
-            needsRerender: !!(flags & 512 /* needsRerender */),
-        },
-        instanceValues: hostRef.$instanceValues$,
-        ancestorComponent: hostRef.$ancestorComponent$,
-        hostElement,
-        lazyInstance: hostRef.$lazyInstance$,
-        vnode: hostRef.$vnode$,
-        modeName: hostRef.$modeName$,
-        onReadyPromise: hostRef.$onReadyPromise$,
-        onReadyResolve: hostRef.$onReadyResolve$,
-        onInstancePromise: hostRef.$onInstancePromise$,
-        onInstanceResolve: hostRef.$onInstanceResolve$,
-        onRenderResolve: hostRef.$onRenderResolve$,
-        queuedListeners: hostRef.$queuedListeners$,
-        rmListeners: hostRef.$rmListeners$,
-        ['s-id']: hostElement['s-id'],
-        ['s-cr']: hostElement['s-cr'],
-        ['s-lr']: hostElement['s-lr'],
-        ['s-p']: hostElement['s-p'],
-        ['s-rc']: hostElement['s-rc'],
-        ['s-sc']: hostElement['s-sc'],
-    };
-};
-const installDevTools = () => {
-    if (BUILD.devTools) {
-        const stencil = win.stencil = win.stencil || {};
-        const originalInspect = stencil.inspect;
-        stencil.inspect = (ref) => {
-            let result = inspect(ref);
-            if (!result && typeof originalInspect === 'function') {
-                result = originalInspect(ref);
-            }
-            return result;
-        };
-    }
-};
 const patchEsm = () => {
     // @ts-ignore
     if (BUILD.cssVarShim && !(win.CSS && win.CSS.supports && win.CSS.supports('color', 'var(--c)'))) {
@@ -285,7 +206,7 @@ const patchEsm = () => {
 };
 const patchBrowser = async () => {
     if (BUILD.isDev) {
-        console.info(...STENCIL_DEV_MODE, 'Stencil is running in the development mode.');
+        consoleDevInfo('Stencil is running in the development mode.');
     }
     if (BUILD.cssVarShim) {
         plt.$cssShim$ = win.__stencil_cssshim;
@@ -371,6 +292,88 @@ const HYDRATED_CLASS = 'hydrated';
 const HYDRATE_ID = 's-id';
 const HYDRATE_CHILD_ID = 'c-id';
 const XLINK_NS = 'http://www.w3.org/1999/xlink';
+const createTime = (fnName, tagName = '') => {
+    if (BUILD.profile) {
+        const key = `st:${fnName}:${tagName}:${i++}`;
+        // Start
+        performance.mark(key);
+        // End
+        return () => performance.measure(`[Stencil] ${fnName}() <${tagName}>`, key);
+    }
+    else {
+        return () => { return; };
+    }
+};
+const uniqueTime = (key, measureText) => {
+    if (BUILD.profile) {
+        if (performance.getEntriesByName(key).length === 0) {
+            performance.mark(key);
+        }
+        return () => {
+            if (performance.getEntriesByName(measureText).length === 0) {
+                performance.measure(measureText, key);
+            }
+        };
+    }
+    else {
+        return () => { return; };
+    }
+};
+const inspect = (ref) => {
+    const hostRef = getHostRef(ref);
+    if (!hostRef) {
+        return undefined;
+    }
+    const flags = hostRef.$flags$;
+    const hostElement = hostRef.$hostElement$;
+    return {
+        renderCount: hostRef.$renderCount$,
+        flags: {
+            hasRendered: !!(flags & 2 /* hasRendered */),
+            hasConnected: !!(flags & 1 /* hasConnected */),
+            isWaitingForChildren: !!(flags & 4 /* isWaitingForChildren */),
+            isConstructingInstance: !!(flags & 8 /* isConstructingInstance */),
+            isQueuedForUpdate: !!(flags & 16 /* isQueuedForUpdate */),
+            hasInitializedComponent: !!(flags & 32 /* hasInitializedComponent */),
+            hasLoadedComponent: !!(flags & 64 /* hasLoadedComponent */),
+            isWatchReady: !!(flags & 128 /* isWatchReady */),
+            isListenReady: !!(flags & 256 /* isListenReady */),
+            needsRerender: !!(flags & 512 /* needsRerender */),
+        },
+        instanceValues: hostRef.$instanceValues$,
+        ancestorComponent: hostRef.$ancestorComponent$,
+        hostElement,
+        lazyInstance: hostRef.$lazyInstance$,
+        vnode: hostRef.$vnode$,
+        modeName: hostRef.$modeName$,
+        onReadyPromise: hostRef.$onReadyPromise$,
+        onReadyResolve: hostRef.$onReadyResolve$,
+        onInstancePromise: hostRef.$onInstancePromise$,
+        onInstanceResolve: hostRef.$onInstanceResolve$,
+        onRenderResolve: hostRef.$onRenderResolve$,
+        queuedListeners: hostRef.$queuedListeners$,
+        rmListeners: hostRef.$rmListeners$,
+        ['s-id']: hostElement['s-id'],
+        ['s-cr']: hostElement['s-cr'],
+        ['s-lr']: hostElement['s-lr'],
+        ['s-p']: hostElement['s-p'],
+        ['s-rc']: hostElement['s-rc'],
+        ['s-sc']: hostElement['s-sc'],
+    };
+};
+const installDevTools = () => {
+    if (BUILD.devTools) {
+        const stencil = win.stencil = win.stencil || {};
+        const originalInspect = stencil.inspect;
+        stencil.inspect = (ref) => {
+            let result = inspect(ref);
+            if (!result && typeof originalInspect === 'function') {
+                result = originalInspect(ref);
+            }
+            return result;
+        };
+    }
+};
 const rootAppliedStyles = new WeakMap();
 const registerStyle = (scopeId, cssText, allowCS) => {
     let style = styles.get(scopeId);
@@ -493,7 +496,7 @@ const h = (nodeName, vnodeData, ...children) => {
                     child = String(child);
                 }
                 else if (BUILD.isDev && child.$flags$ === undefined) {
-                    console.error(...STENCIL_DEV_MODE, `vNode passed as children has unexpected type.
+                    consoleDevError(`vNode passed as children has unexpected type.
 Make sure it's using the correct h() function.
 Empty objects can also be the cause, look for JSX comments that became objects.`);
                 }
@@ -530,7 +533,7 @@ Empty objects can also be the cause, look for JSX comments that became objects.`
         }
     }
     if (BUILD.isDev && vNodeChildren.some(isHost)) {
-        throw new Error(`The <Host> must be the single root component. Make sure:
+        consoleDevError(`The <Host> must be the single root component. Make sure:
 - You are NOT using hostData() and <Host> in the same component.
 - <Host> is used once, and it's the single root component of the render() function.`);
     }
@@ -571,9 +574,7 @@ const newVNode = (tag, text) => {
     return vnode;
 };
 const Host = {};
-const isHost = (node) => {
-    return node && node.$tag$ === Host;
-};
+const isHost = (node) => node && node.$tag$ === Host;
 const vdomFnUtils = {
     'forEach': (children, cb) => children.map(convertToPublic).forEach(cb),
     'map': (children, cb) => children.map(convertToPublic).map(cb).map(convertToPrivate)
@@ -1245,7 +1246,7 @@ render() {
         contentRef = hostElm['s-cr'];
         useNativeShadowDom = supportsShadowDom && (cmpMeta.$flags$ & 1 /* shadowDomEncapsulation */) !== 0;
         // always reset
-        checkSlotRelocate = checkSlotFallbackVisibility = false;
+        checkSlotFallbackVisibility = false;
     }
     // synchronous patch
     patch(oldVNode, rootVnode);
@@ -1583,10 +1584,10 @@ const setValue = (ref, propName, newVal, cmpMeta) => {
         hostRef.$instanceValues$.set(propName, newVal);
         if (BUILD.isDev) {
             if (hostRef.$flags$ & 1024 /* devOnRender */) {
-                console.warn(...STENCIL_DEV_MODE, `The state/prop "${propName}" changed during rendering. This can potentially lead to infinite-loops and other bugs.`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
+                consoleDevWarn(`The state/prop "${propName}" changed during rendering. This can potentially lead to infinite-loops and other bugs.`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
             else if (hostRef.$flags$ & 2048 /* devOnDidLoad */) {
-                console.debug(...STENCIL_DEV_MODE, `The state/prop "${propName}" changed during "componentDidLoad()", this triggers extra re-renders, try to setup on "componentWillLoad()"`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
+                consoleDevWarn(`The state/prop "${propName}" changed during "componentDidLoad()", this triggers extra re-renders, try to setup on "componentWillLoad()"`, '\nElement', elm, '\nNew value', newVal, '\nOld value', oldVal);
             }
         }
         if (!BUILD.lazyLoad || instance) {
@@ -1647,7 +1648,7 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
                             (flags & 1 /* isElementConstructor */) === 0 &&
                             // the member is a non-mutable prop
                             (memberFlags & (31 /* Prop */ | 1024 /* Mutable */)) === 31 /* Prop */) {
-                            console.warn(...STENCIL_DEV_MODE, `@Prop() "${memberName}" on "${cmpMeta.$tagName$}" cannot be modified.\nFurther information: https://stenciljs.com/docs/properties#prop-mutability`);
+                            consoleDevWarn(`@Prop() "${memberName}" on "${cmpMeta.$tagName$}" cannot be modified.\nFurther information: https://stenciljs.com/docs/properties#prop-mutability`);
                         }
                         // proxyComponent, set value
                         setValue(this, memberName, newValue, cmpMeta);
@@ -2380,7 +2381,7 @@ const createEvent = (ref, name, flags) => {
     return {
         emit: (detail) => {
             if (BUILD.isDev && !elm.isConnected) {
-                console.warn(...STENCIL_DEV_MODE, `The "${name}" event was emitted, but the dispatcher node is not longer connected to the dom.`);
+                consoleDevWarn(`The "${name}" event was emitted, but the dispatcher node is not longer connected to the dom.`);
             }
             return elm.dispatchEvent(new (BUILD.hydrateServerSide ? win.CustomEvent : CustomEvent)(name, {
                 bubbles: !!(flags & 4 /* Bubbles */),
