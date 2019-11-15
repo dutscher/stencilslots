@@ -4,6 +4,9 @@
   var doc = document;
   var currentScript = doc.currentScript;
 
+  // Safari 10 support type="module" but still download and executes the nomodule script
+  if (!currentScript || !currentScript.hasAttribute('nomodule') || !('onbeforeload' in currentScript)) {
+    console.log("hallo")
 
     /*!
 es6-promise - a tiny implementation of Promises/A+.
@@ -877,5 +880,5 @@ if (!win.__stencil_cssshim && needsShim()) {
 
     // Note: using .call(window) here because the self-executing function needs
     // to be scoped to the window object for the ES6Promise polyfill to work
-
+  }
 }).call(window);
