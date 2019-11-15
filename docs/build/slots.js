@@ -5,6 +5,8 @@
   var currentScript = doc.currentScript;
 
   // Safari 10 support type="module" but still download and executes the nomodule script
+  console.log(doc, currentScript)
+  console.log(!currentScript, !currentScript.hasAttribute('nomodule'), !('onbeforeload' in currentScript))
   if (!currentScript || !currentScript.hasAttribute('nomodule') || !('onbeforeload' in currentScript)) {
     console.log("hallo")
 
