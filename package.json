@@ -16,14 +16,14 @@
   ],
   "scripts": {
     "npm:install": "npm install",
-    "build": "stencil build --docs",
+    "build": "stencil build --docs --es5",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate"
   },
   "devDependencies": {
-    "@stencil/core": "^1.7.4",
+    "@stencil/core": "^1.8.0",
     "@stencil/sass": "^1.0.1"
   },
   "license": "MIT"

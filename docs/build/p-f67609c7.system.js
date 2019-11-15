@@ -1,0 +1,1 @@
+System.register(["./p-fc9d4acd.system.js"],(function(){"use strict";var e,t;return{setters:[function(n){e=n.p;t=n.b}],execute:function(){e().then((function(e){return t([["p-mzypbos5.system",[[0,"my-child",{text:[1]}],[4,"my-parent",{tag:[1],disabled:[4],messageInline:[16]}],[4,"my-parent-workaround",{tag:[1],disabled:[4],messageInline:[16]}]]]],e)}))}}}));

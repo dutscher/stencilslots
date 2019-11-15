@@ -4,27 +4,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
-  <script type="module" src="build/slots.esm.js"></script>
+  <script>
+    // https://github.com/GrosSacASac/JavaScript-Set-Up/blob/master/js/quirk_fixes/safari10_nomodule_fix.js
+    if (window.MAIN_EXECUTED) {
+      // "warning main.js already executed"
+      throw new Error("");
+    }
+    window.MAIN_EXECUTED = true;
+  </script>
+  <link rel="modulepreload" href="build/p-122505ca.js">
+  <link rel="modulepreload" href="build/p-fgzkb6bm.entry.js">
   <script nomodule="" src="build/slots.js"></script>
 </head>
 <body>
+  <a href="https://github.com/ionic-team/stencil/blob/master/CHANGELOG.md">Use of StencilJS 1.8.0</a>
   <a href="https://github.com/dutscher/stencilslots">Back to repo</a><br />
 
-  <script>function doParentRerender(selector) {
-    const parent = document.querySelector(selector);
-    const child = parent.querySelector('my-child');
-    console.log(parent, child)
-    // toogle
-    parent.disabled = !parent.disabled;
-
-    if (parent.disabled) {
-      parent.messageInline = { isPrimary: true };
-      child.text = 'changed text';
-    } else {
-      parent.messageInline = { isPrimary: false };
-      child.text = 'other changed text for rerender';
+  <script>
+    // https://github.com/GrosSacASac/JavaScript-Set-Up/blob/master/js/quirk_fixes/safari10_nomodule_fix.js
+    if (window.MAIN_EXECUTED) {
+      // "warning main.js already executed"
+      throw new Error("");
     }
-  }</script>
+    window.MAIN_EXECUTED = true;
+
+    function doParentRerender(selector) {
+      const parent = document.querySelector(selector);
+      const child = parent.querySelector('my-child');
+      console.log(parent, child)
+      // toogle
+      parent.disabled = !parent.disabled;
+
+      if (parent.disabled) {
+        parent.messageInline = { isPrimary: true };
+        child.text = 'changed text';
+      } else {
+        parent.messageInline = { isPrimary: false };
+        child.text = 'other changed text for rerender';
+      }
+    }
+  </script>
 
   <hr>
 
@@ -43,5 +62,18 @@
   <my-parent-workaround tag="Property for rerender">
     <my-child text="Default slot text"></my-child>
   </my-parent-workaround>
+
+  <script type="module" data-resources-url="build/" data-stencil-namespace="slots">
+      import {
+      p as a,
+      b as e
+    } from 'build/p-122505ca.js';
+
+    a().then(a => e([ [ 'p-fgzkb6bm', [ [ 0, 'my-child', { text: [ 1 ] } ], [ 4, 'my-parent', {
+      tag: [ 1 ],
+      disabled: [ 4 ],
+      messageInline: [ 16 ]
+    } ], [ 4, 'my-parent-workaround', { tag: [ 1 ], disabled: [ 4 ], messageInline: [ 16 ] } ] ] ] ], a));
+  </script>
 </body>
 </html>
