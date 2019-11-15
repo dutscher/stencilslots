@@ -21,16 +21,9 @@
   <a href="https://github.com/dutscher/stencilslots">Back to repo</a><br />
 
   <script>
-    // https://github.com/GrosSacASac/JavaScript-Set-Up/blob/master/js/quirk_fixes/safari10_nomodule_fix.js
-    if (window.MAIN_EXECUTED) {
-      // "warning main.js already executed"
-      throw new Error("");
-    }
-    window.MAIN_EXECUTED = true;
-
     function doParentRerender(selector) {
-      const parent = document.querySelector(selector);
-      const child = parent.querySelector('my-child');
+      var parent = document.querySelector(selector);
+      var child = parent.querySelector('my-child');
       console.log(parent, child)
       // toogle
       parent.disabled = !parent.disabled;

@@ -1,5 +1,5 @@
 
-'use strict';
+//'use strict';
 (function () {
   var doc = document;
   var currentScript = doc.currentScript;
