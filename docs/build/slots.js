@@ -1,5 +1,5 @@
 
-'use strict';
+//'use strict';
 (function () {
   var doc = document;
   var currentScript = doc.currentScript;
@@ -676,13 +676,16 @@ function loadDocument(doc, globalScopes) {
     return loadDocumentLinks(doc, globalScopes);
 }
 function startWatcher(doc, globalScopes) {
+  if ("MutationObserver" in window) {
     var mutation = new MutationObserver(function () {
         if (loadDocumentStyles(doc, globalScopes)) {
             updateGlobalScopes(globalScopes);
         }
     });
     mutation.observe(document.head, { childList: true });
+  }
 }
+
 function loadDocumentLinks(doc, globalScopes) {
     var promises = [];
     var linkElms = doc.querySelectorAll('link[rel="stylesheet"][href]:not([data-no-shim])');
