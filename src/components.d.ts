@@ -10,6 +10,10 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
+  interface JsxConditions {
+    'disabled': boolean;
+    'tag': string;
+  }
   interface MyChild {
     'text': string;
   }
@@ -27,6 +31,12 @@ export namespace Components {
 
 declare global {
 
+
+  interface HTMLJsxConditionsElement extends Components.JsxConditions, HTMLStencilElement {}
+  var HTMLJsxConditionsElement: {
+    prototype: HTMLJsxConditionsElement;
+    new (): HTMLJsxConditionsElement;
+  };
 
   interface HTMLMyChildElement extends Components.MyChild, HTMLStencilElement {}
   var HTMLMyChildElement: {
@@ -46,6 +56,7 @@ declare global {
     new (): HTMLMyParentWorkaroundElement;
   };
   interface HTMLElementTagNameMap {
+    'jsx-conditions': HTMLJsxConditionsElement;
     'my-child': HTMLMyChildElement;
     'my-parent': HTMLMyParentElement;
     'my-parent-workaround': HTMLMyParentWorkaroundElement;
@@ -53,6 +64,10 @@ declare global {
 }
 
 declare namespace LocalJSX {
+  interface JsxConditions {
+    'disabled'?: boolean;
+    'tag'?: string;
+  }
   interface MyChild {
     'text'?: string;
   }
@@ -68,6 +83,7 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
+    'jsx-conditions': JsxConditions;
     'my-child': MyChild;
     'my-parent': MyParent;
     'my-parent-workaround': MyParentWorkaround;
@@ -80,6 +96,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
+      'jsx-conditions': LocalJSX.JsxConditions & JSXBase.HTMLAttributes<HTMLJsxConditionsElement>;
       'my-child': LocalJSX.MyChild & JSXBase.HTMLAttributes<HTMLMyChildElement>;
       'my-parent': LocalJSX.MyParent & JSXBase.HTMLAttributes<HTMLMyParentElement>;
       'my-parent-workaround': LocalJSX.MyParentWorkaround & JSXBase.HTMLAttributes<HTMLMyParentWorkaroundElement>;

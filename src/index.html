@@ -10,6 +10,11 @@
 
 </head>
 <body>
+  <a href="https://github.com/ionic-team/stencil/blob/master/CHANGELOG.md">
+    Use of StencilJS 1.8.5</a>
+  <a href="https://github.com/dutscher/stencilslots">Back to repo</a>
+  <br />
+  <br />
   <script>
     function doParentRerender(selector) {
       const parent = document.querySelector(selector);
@@ -28,7 +33,7 @@
     }
   </script>
 
-  <button onclick="doParentRerender('my-parent')">Change prop</button><br /><br />
+  <button onclick="doParentRerender('my-parent')">Change prop (2nd rerender slot is gone)</button><br /><br />
 
   <my-parent tag="Property for rerender">
     <my-child text="Default slot text"></my-child>
@@ -36,11 +41,15 @@
 
   <hr />
 
-  <button onclick="doParentRerender('my-parent-workaround')">Change prop</button><br /><br />
+  <button onclick="doParentRerender('my-parent-workaround')">Change prop (2nd rerender slot is already there)</button><br /><br />
 
   <my-parent-workaround tag="Property for rerender">
     <my-child text="Default slot text"></my-child>
   </my-parent-workaround>
 
+  <hr />
+
+  JSX conditions should work
+  <jsx-conditions></jsx-conditions>
 </body>
 </html>
