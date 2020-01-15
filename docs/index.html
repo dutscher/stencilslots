@@ -1,49 +1,15 @@
-<!doctype html>
-<html dir="ltr" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
-  <script src="/stencilslots/loader.js" defer async></script>
-</head>
-<body>
-  <a href="https://github.com/ionic-team/stencil/blob/master/CHANGELOG.md">Use of StencilJS 1.8.0</a>
-  <a href="https://github.com/dutscher/stencilslots">Back to repo</a><br />
-
-  <script>
-    function doParentRerender(selector) {
-      var parent = document.querySelector(selector);
-      var child = parent.querySelector('my-child');
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <script type="module" src="/stencilslots/build/slots.esm.js"></script> <script nomodule="" src="/stencilslots/build/slots.js"></script> </head> <body> <a href="https://github.com/ionic-team/stencil/blob/master/CHANGELOG.md"> Use of StencilJS 1.8.5</a> <a href="https://github.com/dutscher/stencilslots">Back to repo</a> <br> <br> <script>function doParentRerender(selector) {
+      const parent = document.querySelector(selector);
+      const child = parent.querySelector('my-child');
       console.log(parent, child)
       // toogle
       parent.disabled = !parent.disabled;
 
-      if (parent.disabled) {
-        parent.messageInline = { isPrimary: true };
-        child.text = 'changed text';
+      if(parent.disabled){
+        parent.messageInline = {isPrimary: true};
+        child.text = "changed text";
       } else {
-        parent.messageInline = { isPrimary: false };
-        child.text = 'other changed text for rerender';
+        parent.messageInline = {isPrimary: false};
+        child.text = "other changed text for rerender";
       }
-    }
-  </script>
-
-  <hr>
-
-  <button onclick="doParentRerender('my-parent')">Change prop</button>
-  <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-broken/parent.tsx">Sourcecode</a>
-  <br><br>
-  <my-parent tag="Property for rerender">
-    <my-child text="Default slot text"></my-child>
-  </my-parent>
-
-  <hr>
-
-  <button onclick="doParentRerender('my-parent-workaround')">Change prop</button>
-  <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-workaround/parent.tsx">Sourcecode</a>
-  <br><br>
-  <my-parent-workaround tag="Property for rerender">
-    <my-child text="Default slot text"></my-child>
-  </my-parent-workaround>
-</body>
-</html>
+    }</script> <button onclick="doParentRerender('my-parent')">Change prop (2nd rerender slot is gone)</button><br><br> <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-broken/parent.tsx">Sourcecode</a> <br><br> <my-parent tag="Property for rerender"> <my-child text="Default slot text"></my-child> </my-parent> <hr> <button onclick="doParentRerender('my-parent-workaround')">Change prop (2nd rerender slot is already there)</button><br><br> <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-workaround/parent.tsx">Sourcecode</a> <br><br> <my-parent-workaround tag="Property for rerender"> <my-child text="Default slot text"></my-child> </my-parent-workaround> <hr> JSX conditions should work <jsx-conditions></jsx-conditions> </body></html>

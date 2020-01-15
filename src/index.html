@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
 
-  <script type="module" src="/build/slots.esm.js"></script>
-  <script nomodule src="/build/slots.js"></script>
+  <script type="module" src="/stencilslots/build/slots.esm.js"></script>
+  <script nomodule src="/stencilslots/build/slots.js"></script>
 
 </head>
 <body>
@@ -34,7 +34,8 @@
   </script>
 
   <button onclick="doParentRerender('my-parent')">Change prop (2nd rerender slot is gone)</button><br /><br />
-
+  <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-broken/parent.tsx">Sourcecode</a>
+  <br><br>
   <my-parent tag="Property for rerender">
     <my-child text="Default slot text"></my-child>
   </my-parent>
@@ -42,7 +43,8 @@
   <hr />
 
   <button onclick="doParentRerender('my-parent-workaround')">Change prop (2nd rerender slot is already there)</button><br /><br />
-
+  <a href="https://github.com/dutscher/stencilslots/blob/master/src/components/parent-workaround/parent.tsx">Sourcecode</a>
+  <br><br>
   <my-parent-workaround tag="Property for rerender">
     <my-child text="Default slot text"></my-child>
   </my-parent-workaround>
