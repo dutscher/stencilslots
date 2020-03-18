@@ -17,5 +17,8 @@ export const config: Config = {
   ],
   bundles: [
     { components: ['my-parent', 'my-parent-workaround', 'my-child'] },
-  ]
+  ],
+  extras: {
+    appendChildSlotFix: true,
+  }
 };
