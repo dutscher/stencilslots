@@ -1,0 +1,1 @@
+import{r as s,h as i,H as t}from"./p-184b80da.js";const l=class{constructor(i){s(this,i),this.tag="",this.disabled=!1}render(){return i(t,null,i("div",null,i("div",null),!1,void 0,"",this.tag&&i("div",null),this.disabled&&i("div",null)))}};export{l as jsx_conditions};
